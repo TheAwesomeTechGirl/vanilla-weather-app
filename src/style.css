@@ -78,22 +78,7 @@ small{
 }
 
 
-
-.weatherforcast {
-    border-bottom: 1px solid #f9f7fe;
-    margin: 40px 0;
-    padding-bottom: 50px;
-    text-align: center;
-}
-
-.weatherforcast .forcast-time {
-    color: rgba(39,33,66,.4);
-    font-size: 16px;
-    line-height: 20px;
-    text-align: center;
-}
-
-.weatherforcast img{
-        display: block;
-    margin: 20px auto;
+.weather-temperature .active{
+    color: rgb(33,33,33);
+    cursor: default;
 }
