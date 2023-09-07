@@ -24,6 +24,30 @@ let day = days[date.getDay()];
 return `${day} ${hours} ${minutes}`;
 }
 
+
+function displayForecast() {
+    let forecastElement = document.querySelector("#forecast");
+
+    let forecastHTML = `<div class="row">` ;
+    let days = ["Thu", "fri", "sat", "sun"];
+     days.forEach(function(day) {
+        forecastHTML = forecastHTML +  ` 
+        <div class="col-2">
+          <div class="weather-Forecast-date">${day}</div>
+            <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" width="42px"  id="icon"/> 
+    <div class="Weather-Forecast-temperatures">
+    <span class="weather-forecast-temperature-max">18°</span>
+    <span class="weather-forecast-temperature-min">12°</span>
+    </div>
+        </div>
+        `;
+     });
+
+    forecastHTML = forecastHTML +  `</div>`;
+    forecastElement.innerHTML = forecastHTML;
+}
+
+
 function displayTemperature(response) {
     let temperatureElement = document.querySelector("#temperature");
     let cityElement = document.querySelector("#city");
@@ -98,3 +122,4 @@ celciuslink.addEventListener("click", displayCelciusTemperature);
 
 
 search("New York")
+displayForecast();
