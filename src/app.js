@@ -24,29 +24,43 @@ let day = days[date.getDay()];
 return `${day} ${hours} ${minutes}`;
 }
 
+function formatDay(timestamp) {
+let date = new Date(timestamp * 1000);
+let day = date.getDay();
+
+let days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]
+
+return days[day];
+
+}
 
 function displayForecast(response) {
-    console.log(response.data.daily);
+    let forcast = (response.data.daily);
+    
     let forecastElement = document.querySelector("#forecast");
 
     let forecastHTML = `<div class="row">` ;
-    let days = ["Thu", "fri", "sat", "sun"];
-     days.forEach(function (day) {
+
+     forcast.forEach(function (forcastDay, index) {
+        if (index < 6) {
         forecastHTML = forecastHTML +  ` 
         <div class="col-2">
-          <div class="weather-Forecast-date">${day}</div>
-            <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" width="42px"  id="icon"/> 
+          <div class="weather-Forecast-date">${formatDay(forcastDay.dt)}</div>
+        
+            <img src="http://openweathermap.org/img/wn/${forcastDay.weather[0].icon}@2x.png" alt="" width="42px" > 
     <div class="Weather-Forecast-temperatures">
-    <span class="weather-forecast-temperature-max">18°</span>
-    <span class="weather-forecast-temperature-min">12°</span>
+    <span class="weather-forecast-temperature-max">${Math.round(forcastDay.temp.max)}°</span>
+    <span class="weather-forecast-temperature-min">${Math.round(forcastDay.temp.min)}°</span>
     </div>
         </div>
         `;
+    }
      });
 
     forecastHTML = forecastHTML +  `</div>`;
     forecastElement.innerHTML = forecastHTML;
 }
+
 
 function getForecast(coordinates){
     console.log(coordinates);
@@ -95,41 +109,9 @@ function handleSubmit(event){
     search(cityInputElement.value);
 }
 
-//convertion of the temperature
-function  displayFahrenheitTemperature(event) {
-    event.preventDefault();
-    let temperatureElement = document.querySelector("#temperature")
-    //remove the active from the celcius link
-    celciuslink.classList.remove("active");
-    fahrenheitlink.classList.add("active");
-    let fahrenheitTemperature = (celciusTemperature * 9/5) + 32;
-    temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
-}
-
-function  displayCelciusTemperature(event) {
-    event.preventDefault();
-//add the active from the celcius link
-celciuslink.classList.add("active");
-fahrenheitlink.classList.remove("active");
-
-    let temperatureElement = document.querySelector("#temperature")
-    temperatureElement.innerHTML = Math.round(celciusTemperature);
-}
-
-
-let celciusTemperature = null
 
 //Adding event listener to the form and button
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
-
-
-//displaying the temperature
-let fahrenheitlink = document.querySelector("#fahrenheit-link");
-fahrenheitlink.addEventListener("click", displayFahrenheitTemperature);
-
-let celciuslink = document.querySelector("#celcius-link");
-celciuslink.addEventListener("click", displayCelciusTemperature);
-
 
 search("New York")
